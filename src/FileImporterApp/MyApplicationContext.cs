@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using log4net;
+using FileImporterApp.FolderConfig;
 
 namespace FileImporterApp
 {
@@ -9,6 +10,8 @@ namespace FileImporterApp
     {
         private NotifyIcon notifyIcon;
         private ContextMenu contextMenu;
+        private ImportFolderConfig folderConfig;
+        private ImportFolderConfigManager folderConfigManager;
         private ILog log;
 
         public MyApplicationContext()
@@ -19,6 +22,9 @@ namespace FileImporterApp
         private void InitializeContext()
         {
             log = log = LogManager.GetLogger(GetType());
+
+            folderConfigManager = new ImportFolderConfigManager();
+            folderConfig = folderConfigManager.OpenConfiguration();
 
             contextMenu = new ContextMenu();
 
