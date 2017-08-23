@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using log4net;
 
 namespace FileImporterApp
 {
@@ -8,6 +9,7 @@ namespace FileImporterApp
     {
         private NotifyIcon notifyIcon;
         private ContextMenu contextMenu;
+        private ILog log;
 
         public MyApplicationContext()
         {
@@ -16,6 +18,8 @@ namespace FileImporterApp
 
         private void InitializeContext()
         {
+            log = log = LogManager.GetLogger(GetType());
+
             contextMenu = new ContextMenu();
 
             var separator1MenuItem = new MenuItem { Text = "-" };
