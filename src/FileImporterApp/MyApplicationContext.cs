@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 using FileImporterApp.FolderConfig;
+using FileImporterApp.TextFiles;
+using DokuFlex.WinForms.Common;
 
 namespace FileImporterApp
 {
@@ -80,9 +82,17 @@ namespace FileImporterApp
             throw new NotImplementedException();
         }
 
-        private void ImportFilesMenuItem_Click(object sender, EventArgs e)
+        private async void ImportFilesMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var token = await Session.GetTikectAsync();
+
+            if (string.IsNullOrWhiteSpace(token))
+                return;
+
+            using (var form = new ImportTextForm(token))
+            {
+                form.ShowDialog();
+            }
         }
 
         private void OpenImportFolderMenuItem_Click(object sender, EventArgs e)

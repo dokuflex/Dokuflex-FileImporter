@@ -117,25 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangeCredentialsText" xml:space="preserve">
-    <value>Cambiar credenciales de usuario</value>
-  </data>
-  <data name="ConfigureImportFolderText" xml:space="preserve">
-    <value>Configurar carpeta de importación...</value>
-  </data>
-  <data name="ExitText" xml:space="preserve">
-    <value>Salir de la aplicación</value>
-  </data>
-  <data name="ImportFilesText" xml:space="preserve">
-    <value>Importar archivos</value>
-  </data>
-  <data name="OpenImportFolderText" xml:space="preserve">
-    <value>Abrir carpeta de importación</value>
-  </data>
-  <data name="SelectFileText" xml:space="preserve">
-    <value>Seleccionar archivo</value>
-  </data>
-  <data name="SettingsText" xml:space="preserve">
-    <value>Ajustes de configuración...</value>
-  </data>
+  <metadata name="bindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="bindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

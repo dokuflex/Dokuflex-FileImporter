@@ -1,4 +1,6 @@
-﻿namespace FileImporterApp.FolderConfig
+﻿using FileImporterApp.Metadata;
+
+namespace FileImporterApp.FolderConfig
 {
     public class ImportFolderConfig
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 
-namespace FileImporterApp.FolderConfig
+namespace FileImporterApp.Metadata
 {
     public class MetadataItemCollection : Collection<MetadataItem>
     {

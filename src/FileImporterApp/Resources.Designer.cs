@@ -106,6 +106,15 @@ namespace FileImporterApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seleccionar archivo.
+        /// </summary>
+        internal static string SelectFileText {
+            get {
+                return ResourceManager.GetString("SelectFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ajustes de configuración....
         /// </summary>
         internal static string SettingsText {

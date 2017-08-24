@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileImporterApp.FolderConfig
+﻿namespace FileImporterApp.Metadata
 {
     public class MetadataItem
     {
@@ -12,6 +6,7 @@ namespace FileImporterApp.FolderConfig
         public string DokufieldName { get; set; }
         public string DokufieldType { get; set; }
         public bool Mandatory { get; set; }
+        public string FieldName { get; set; }
         public int FieldNameIndex { get; set; }
     }
 }

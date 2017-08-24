@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DokuFlex.Windows.Common">
+      <HintPath>..\..\libs\Dokuflex\DokuFlex.Windows.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DokuFlex.WinForms.Common">
+      <HintPath>..\..\libs\Dokuflex\DokuFlex.WinForms.Common.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -53,8 +59,8 @@
   <ItemGroup>
     <Compile Include="FolderConfig\ImportFolderConfig.cs" />
     <Compile Include="FolderConfig\ImportFolderConfigManager.cs" />
-    <Compile Include="FolderConfig\MetadataItem.cs" />
-    <Compile Include="FolderConfig\MetadataItemCollection.cs" />
+    <Compile Include="Metadata\MetadataItem.cs" />
+    <Compile Include="Metadata\MetadataItemCollection.cs" />
     <Compile Include="MyApplicationContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +68,31 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextForm.Designer.cs">
+      <DependentUpon>ImportTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextModel.cs" />
+    <Compile Include="TextFiles\ImportTextPage1Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextPage1Control.Designer.cs">
+      <DependentUpon>ImportTextPage1Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextPage2Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextPage2Control.Designer.cs">
+      <DependentUpon>ImportTextPage2Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextPage3Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextPage3Control.Designer.cs">
+      <DependentUpon>ImportTextPage3Control.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +103,18 @@
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\ImportTextForm.resx">
+      <DependentUpon>ImportTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\ImportTextPage1Control.resx">
+      <DependentUpon>ImportTextPage1Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\ImportTextPage2Control.resx">
+      <DependentUpon>ImportTextPage2Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\ImportTextPage3Control.resx">
+      <DependentUpon>ImportTextPage3Control.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
