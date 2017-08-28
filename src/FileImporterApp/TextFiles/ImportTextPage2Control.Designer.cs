@@ -31,17 +31,20 @@
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colDokuField = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFieldName = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colMandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.bsMetadata = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.colDokuField = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFieldName = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colMandatory = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.rbtnSpace = new System.Windows.Forms.RadioButton();
+            this.rbtnScriptUnder = new System.Windows.Forms.RadioButton();
+            this.rbtnComa = new System.Windows.Forms.RadioButton();
+            this.rbtnSemicolon = new System.Windows.Forms.RadioButton();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMetadata)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
@@ -60,15 +63,41 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDokuField,
             this.colFieldName,
             this.colMandatory});
+            this.dataGridView1.DataSource = this.bsMetadata;
             this.dataGridView1.Location = new System.Drawing.Point(24, 188);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(535, 195);
+            this.dataGridView1.Size = new System.Drawing.Size(520, 174);
             this.dataGridView1.TabIndex = 18;
+            // 
+            // colDokuField
+            // 
+            this.colDokuField.DataPropertyName = "DokufieldName";
+            this.colDokuField.HeaderText = "Propiedad";
+            this.colDokuField.Name = "colDokuField";
+            this.colDokuField.ReadOnly = true;
+            this.colDokuField.Width = 200;
+            // 
+            // colFieldName
+            // 
+            this.colFieldName.DataPropertyName = "FieldIndex";
+            this.colFieldName.HeaderText = "Campo";
+            this.colFieldName.Name = "colFieldName";
+            this.colFieldName.Width = 200;
+            // 
+            // colMandatory
+            // 
+            this.colMandatory.DataPropertyName = "Mandatory";
+            this.colMandatory.HeaderText = "Requerido";
+            this.colMandatory.Name = "colMandatory";
+            this.colMandatory.ReadOnly = true;
+            this.colMandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMandatory.Width = 70;
             // 
             // panel1
             // 
@@ -93,9 +122,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.rbtnSpace);
+            this.groupBox1.Controls.Add(this.rbtnScriptUnder);
+            this.groupBox1.Controls.Add(this.rbtnComa);
+            this.groupBox1.Controls.Add(this.rbtnSemicolon);
             this.groupBox1.Location = new System.Drawing.Point(24, 75);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(413, 56);
@@ -103,58 +133,53 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Eliga el delimitador que separa los campos";
             // 
-            // radioButton3
+            // rbtnSpace
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(209, 22);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(78, 19);
-            this.radioButton3.TabIndex = 2;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Tabulador";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.rbtnSpace.AutoSize = true;
+            this.rbtnSpace.Location = new System.Drawing.Point(212, 22);
+            this.rbtnSpace.Name = "rbtnSpace";
+            this.rbtnSpace.Size = new System.Drawing.Size(65, 19);
+            this.rbtnSpace.TabIndex = 3;
+            this.rbtnSpace.TabStop = true;
+            this.rbtnSpace.Text = "Espacio";
+            this.rbtnSpace.UseVisualStyleBackColor = true;
+            this.rbtnSpace.CheckedChanged += new System.EventHandler(this.rbtnSpace_CheckedChanged);
             // 
-            // radioButton2
+            // rbtnScriptUnder
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(135, 22);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(57, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Coma";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbtnScriptUnder.AutoSize = true;
+            this.rbtnScriptUnder.Location = new System.Drawing.Point(295, 22);
+            this.rbtnScriptUnder.Name = "rbtnScriptUnder";
+            this.rbtnScriptUnder.Size = new System.Drawing.Size(99, 19);
+            this.rbtnScriptUnder.TabIndex = 2;
+            this.rbtnScriptUnder.TabStop = true;
+            this.rbtnScriptUnder.Text = "Guíon bajo (_)";
+            this.rbtnScriptUnder.UseVisualStyleBackColor = true;
+            this.rbtnScriptUnder.CheckedChanged += new System.EventHandler(this.rbtnScriptUnder_CheckedChanged);
             // 
-            // radioButton1
+            // rbtnComa
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(19, 22);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(99, 19);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Punto y coma";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbtnComa.AutoSize = true;
+            this.rbtnComa.Location = new System.Drawing.Point(135, 22);
+            this.rbtnComa.Name = "rbtnComa";
+            this.rbtnComa.Size = new System.Drawing.Size(57, 19);
+            this.rbtnComa.TabIndex = 1;
+            this.rbtnComa.TabStop = true;
+            this.rbtnComa.Text = "Coma";
+            this.rbtnComa.UseVisualStyleBackColor = true;
+            this.rbtnComa.CheckedChanged += new System.EventHandler(this.rbtnComa_CheckedChanged);
             // 
-            // colDokuField
+            // rbtnSemicolon
             // 
-            this.colDokuField.HeaderText = "Propiedad";
-            this.colDokuField.Name = "colDokuField";
-            this.colDokuField.ReadOnly = true;
-            this.colDokuField.Width = 200;
-            // 
-            // colFieldName
-            // 
-            this.colFieldName.HeaderText = "Campo";
-            this.colFieldName.Name = "colFieldName";
-            this.colFieldName.Width = 200;
-            // 
-            // colMandatory
-            // 
-            this.colMandatory.HeaderText = "Requerido";
-            this.colMandatory.Name = "colMandatory";
-            this.colMandatory.ReadOnly = true;
-            this.colMandatory.Width = 70;
+            this.rbtnSemicolon.AutoSize = true;
+            this.rbtnSemicolon.Location = new System.Drawing.Point(19, 22);
+            this.rbtnSemicolon.Name = "rbtnSemicolon";
+            this.rbtnSemicolon.Size = new System.Drawing.Size(99, 19);
+            this.rbtnSemicolon.TabIndex = 0;
+            this.rbtnSemicolon.TabStop = true;
+            this.rbtnSemicolon.Text = "Punto y coma";
+            this.rbtnSemicolon.UseVisualStyleBackColor = true;
+            this.rbtnSemicolon.CheckedChanged += new System.EventHandler(this.rbtnSemicolon_CheckedChanged);
             // 
             // ImportTextPage2Control
             // 
@@ -168,6 +193,7 @@
             this.Name = "ImportTextPage2Control";
             this.Size = new System.Drawing.Size(600, 440);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMetadata)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -184,12 +210,14 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbtnScriptUnder;
+        private System.Windows.Forms.RadioButton rbtnComa;
+        private System.Windows.Forms.RadioButton rbtnSemicolon;
+        private System.Windows.Forms.BindingSource bindingSource;
+        private System.Windows.Forms.RadioButton rbtnSpace;
+        private System.Windows.Forms.BindingSource bsMetadata;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDokuField;
         private System.Windows.Forms.DataGridViewComboBoxColumn colFieldName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colMandatory;
-        private System.Windows.Forms.BindingSource bindingSource;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colMandatory;
     }
 }

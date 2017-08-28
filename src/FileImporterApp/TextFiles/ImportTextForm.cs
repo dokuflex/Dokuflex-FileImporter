@@ -1,4 +1,6 @@
 ﻿using DokuFlex.Windows.Common.Services;
+using DokuFlex.WinForms.Common;
+using FileImporterApp.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,8 +15,6 @@ namespace FileImporterApp.TextFiles
 {
     public partial class ImportTextForm : Form
     {
-        private ImportTextModel model;
-        private readonly string token;
         private readonly List<Control> pageList;
         private readonly IDataService dataService;
 
@@ -22,29 +22,39 @@ namespace FileImporterApp.TextFiles
         {
             InitializeComponent();
 
-            model = new ImportTextModel();
-
             pageList = new List<Control>
             {
                 importTextPage1Control1,
                 importTextPage2Control1,
                 importTextPage3Control1
             };
+
+            GoToPage(PageIndex);
+            UpdateNavButtonsStatus();
+
+            dataService = DataServiceFactory.Create();
         }
 
-        public ImportTextForm(string token)
+        public ImportTextForm(ImportTextViewModel viewModel)
             : this()
         {
-            this.token = token;
-            dataService = DataServiceFactory.Create();
-            importTextPage1Control1.Model = model;
-            importTextPage1Control1.Token = token;
+            ViewModel = viewModel;
+            ViewModel.Model.AddFileNameMetadata();
+            BindComponents();
+        }
+
+        private void BindComponents()
+        {
+            importTextPage1Control1.Model = ViewModel.Model;
+            importTextPage2Control1.Model = ViewModel.Model;
         }
 
         protected override async void OnLoad(EventArgs e)
         {
-            GoToPage(PageIndex);
-            UpdateNavButtonsStatus();
+            var token = await Session.GetTikectAsync();
+
+            if (string.IsNullOrWhiteSpace(token))
+                return;
 
             try
             {
@@ -58,6 +68,7 @@ namespace FileImporterApp.TextFiles
             }
         }
 
+        public ImportTextViewModel ViewModel { get; private set; }
         public int PageIndex { get; private set; } = 0;
         public int PageCount { get { return pageList.Count; } }
 
@@ -85,6 +96,18 @@ namespace FileImporterApp.TextFiles
             btnPrior.Enabled = PageIndex > 0;
             btnNext.Enabled = PageIndex < PageCount - 1;
             btnFinalize.Enabled = PageIndex == PageCount - 1;
+        }
+
+        private void btnFinalize_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

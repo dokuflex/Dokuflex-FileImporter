@@ -14,19 +14,38 @@ namespace FileImporterApp
         private ContextMenu contextMenu;
         private ImportFolderConfig folderConfig;
         private ImportFolderConfigManager folderConfigManager;
+        private ImportTextManager ImportTextManager;
         private ILog log;
 
         public MyApplicationContext()
         {
             InitializeContext();
+
+            Application.ThreadExit += Application_ThreadExit;
+            Application.ThreadException += Application_ThreadException;
+        }
+
+        private void Application_ThreadExit(object sender, EventArgs e)
+        {
+            if (ImportTextManager.Importing)
+                ImportTextManager.StopImport();
+        }
+
+        private void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            if (ImportTextManager.Importing)
+                ImportTextManager.StopImport();
+
+            log.Error("Application exception", e.Exception);
         }
 
         private void InitializeContext()
         {
-            log = log = LogManager.GetLogger(GetType());
+            log = LogManager.GetLogger(GetType());
 
             folderConfigManager = new ImportFolderConfigManager();
             folderConfig = folderConfigManager.OpenConfiguration();
+            ImportTextManager = new ImportTextManager();
 
             contextMenu = new ContextMenu();
 
@@ -69,35 +88,36 @@ namespace FileImporterApp
 
         private void SettingsMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            using (var settingsForm = new SettingsForm())
+            {
+                settingsForm.ShowDialog();
+            }
         }
 
         private void ChangeCredentialsMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Session.ChangeCredentials();
         }
 
         private void ConfigureImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private async void ImportFilesMenuItem_Click(object sender, EventArgs e)
         {
-            var token = await Session.GetTikectAsync();
-
-            if (string.IsNullOrWhiteSpace(token))
-                return;
-
-            using (var form = new ImportTextForm(token))
+            if (ImportTextManager.Importing)
             {
-                form.ShowDialog();
+                MessageBox.Show(Resources.ImportInProgressText, "FileImporter", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            await ImportTextManager.StartImport();
         }
 
         private void OpenImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)

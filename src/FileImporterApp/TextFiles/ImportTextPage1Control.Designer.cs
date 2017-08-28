@@ -55,6 +55,12 @@
             this.cbxDocumentryTypes.Size = new System.Drawing.Size(227, 23);
             this.cbxDocumentryTypes.TabIndex = 24;
             this.cbxDocumentryTypes.ValueMember = "id";
+            this.cbxDocumentryTypes.SelectedIndexChanged += new System.EventHandler(this.cbxDocumentryTypes_SelectedIndexChanged);
+            this.cbxDocumentryTypes.SelectedValueChanged += new System.EventHandler(this.cbxDocumentryTypes_SelectedValueChanged);
+            // 
+            // bindingSource
+            // 
+            this.bindingSource.CurrentItemChanged += new System.EventHandler(this.bindingSource_CurrentItemChanged);
             // 
             // label5
             // 
@@ -68,7 +74,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(102, 257);
+            this.label4.Location = new System.Drawing.Point(102, 265);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(51, 15);
             this.label4.TabIndex = 22;
@@ -76,7 +82,7 @@
             // 
             // btnBrowseCloud
             // 
-            this.btnBrowseCloud.Location = new System.Drawing.Point(454, 253);
+            this.btnBrowseCloud.Location = new System.Drawing.Point(454, 261);
             this.btnBrowseCloud.Name = "btnBrowseCloud";
             this.btnBrowseCloud.Size = new System.Drawing.Size(25, 23);
             this.btnBrowseCloud.TabIndex = 21;
@@ -87,7 +93,7 @@
             // tbxFolderPath
             // 
             this.tbxFolderPath.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "FolderPath", true));
-            this.tbxFolderPath.Location = new System.Drawing.Point(159, 253);
+            this.tbxFolderPath.Location = new System.Drawing.Point(159, 261);
             this.tbxFolderPath.Name = "tbxFolderPath";
             this.tbxFolderPath.Size = new System.Drawing.Size(289, 23);
             this.tbxFolderPath.TabIndex = 20;

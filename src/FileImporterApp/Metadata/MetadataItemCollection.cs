@@ -3,7 +3,7 @@
 
 namespace FileImporterApp.Metadata
 {
-    public class MetadataItemCollection : Collection<MetadataItem>
+    public class MetadataItemCollection : ObservableCollection<MetadataItem>
     {
     }
 }

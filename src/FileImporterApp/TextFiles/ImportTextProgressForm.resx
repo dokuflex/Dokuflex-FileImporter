@@ -117,31 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangeCredentialsText" xml:space="preserve">
-    <value>Cambiar credenciales de usuario</value>
-  </data>
-  <data name="ConfigureImportFolderText" xml:space="preserve">
-    <value>Configurar carpeta de importación...</value>
-  </data>
-  <data name="ExitText" xml:space="preserve">
-    <value>Salir de la aplicación</value>
-  </data>
-  <data name="ImportFilesText" xml:space="preserve">
-    <value>Importar archivos</value>
-  </data>
-  <data name="ImportInProgressText" xml:space="preserve">
-    <value>Hay una importación en proceso, espere a que finalize.</value>
-  </data>
-  <data name="OpenImportFolderText" xml:space="preserve">
-    <value>Abrir carpeta de importación</value>
-  </data>
-  <data name="ResumeImportText" xml:space="preserve">
-    <value>Una importación no finalizo correctamente. ¿Desea resumir la última importación?</value>
-  </data>
-  <data name="SelectFileText" xml:space="preserve">
-    <value>Seleccionar archivo</value>
-  </data>
-  <data name="SettingsText" xml:space="preserve">
-    <value>Ajustes de configuración...</value>
-  </data>
 </root>

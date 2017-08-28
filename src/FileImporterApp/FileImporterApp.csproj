@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldNameIndex.cs" />
+    <Compile Include="FieldNameIndexCollection.cs" />
     <Compile Include="FolderConfig\ImportFolderConfig.cs" />
     <Compile Include="FolderConfig\ImportFolderConfigManager.cs" />
     <Compile Include="Metadata\MetadataItem.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="TextFiles\ImportTextForm.Designer.cs">
       <DependentUpon>ImportTextForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextFiles\ImportTextManager.cs" />
     <Compile Include="TextFiles\ImportTextModel.cs" />
     <Compile Include="TextFiles\ImportTextPage1Control.cs">
       <SubType>UserControl</SubType>
@@ -94,6 +97,13 @@
     <Compile Include="TextFiles\ImportTextPage3Control.Designer.cs">
       <DependentUpon>ImportTextPage3Control.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextFiles\ImportTextProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextProgressForm.Designer.cs">
+      <DependentUpon>ImportTextProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextFiles\ImportTextViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -115,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TextFiles\ImportTextPage3Control.resx">
       <DependentUpon>ImportTextPage3Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFiles\ImportTextProgressForm.resx">
+      <DependentUpon>ImportTextProgressForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

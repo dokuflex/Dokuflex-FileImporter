@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DokuFlex.Windows.Common.Services.Data;
 using DokuFlex.WinForms.Common;
+using FileImporterApp.Metadata;
 
 namespace FileImporterApp.TextFiles
 {
@@ -24,8 +25,6 @@ namespace FileImporterApp.TextFiles
         {
             cbxDocumentryTypes.DataSource = new BindingList<Documentary>(documentaries);
         }
-
-        public string Token { get; set; }
 
         public ImportTextModel Model
         {
@@ -46,14 +45,20 @@ namespace FileImporterApp.TextFiles
             {
                 if (openFileDlg.ShowDialog() == DialogResult.OK)
                 {
-                    tbxSourceFile.Text = openFileDlg.FileName;
+                    Model.FilePath = openFileDlg.FileName;
+                    bindingSource.ResetCurrentItem();
                 }
             }
         }
 
-        private void BtnBrowseCloud_Click(object sender, EventArgs e)
+        private async void BtnBrowseCloud_Click(object sender, EventArgs e)
         {
-            using (var form = new BrowseFolderForm(Token))
+            var token = await Session.GetTikectAsync();
+
+            if (string.IsNullOrWhiteSpace(token))
+                return;
+
+            using (var form = new BrowseFolderForm(token))
             {
                 if (form.ShowFolderBrowserDialog())
                 {
@@ -63,6 +68,42 @@ namespace FileImporterApp.TextFiles
                     bindingSource.ResetCurrentItem();
                 }
             }
+        }
+
+        private void bindingSource_CurrentItemChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxDocumentryTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxDocumentryTypes_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cbxDocumentryTypes.SelectedItem is Documentary documentary)
+            {
+                Model.MetadataCollection.Clear();
+
+                foreach (var dokufield in documentary.elements)
+                {
+                    Model.MetadataCollection.Add(new MetadataItem
+                    {
+                        DokufieldId = dokufield.id,
+                        DokufieldType = dokufield.type,
+                        DokufieldName = dokufield.key,
+                        Mandatory = dokufield.mandatory > 0
+                    });
+                }
+
+                Model.AddFileNameMetadata();
+            }
+        }
+
+        private void btnLoadMetadata_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -97,11 +97,29 @@ namespace FileImporterApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hay una importación en proceso, espere a que finalize..
+        /// </summary>
+        internal static string ImportInProgressText {
+            get {
+                return ResourceManager.GetString("ImportInProgressText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abrir carpeta de importación.
         /// </summary>
         internal static string OpenImportFolderText {
             get {
                 return ResourceManager.GetString("OpenImportFolderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Una importación no finalizo correctamente. ¿Desea resumir la última importación?.
+        /// </summary>
+        internal static string ResumeImportText {
+            get {
+                return ResourceManager.GetString("ResumeImportText", resourceCulture);
             }
         }
         
