@@ -43,11 +43,13 @@
             this.rbtnComa = new System.Windows.Forms.RadioButton();
             this.rbtnSemicolon = new System.Windows.Forms.RadioButton();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMetadata)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -85,7 +87,7 @@
             // 
             // colFieldName
             // 
-            this.colFieldName.DataPropertyName = "FieldIndex";
+            this.colFieldName.DataPropertyName = "FieldNameIndex";
             this.colFieldName.HeaderText = "Campo";
             this.colFieldName.Name = "colFieldName";
             this.colFieldName.Width = 200;
@@ -176,10 +178,13 @@
             this.rbtnSemicolon.Name = "rbtnSemicolon";
             this.rbtnSemicolon.Size = new System.Drawing.Size(99, 19);
             this.rbtnSemicolon.TabIndex = 0;
-            this.rbtnSemicolon.TabStop = true;
             this.rbtnSemicolon.Text = "Punto y coma";
             this.rbtnSemicolon.UseVisualStyleBackColor = true;
             this.rbtnSemicolon.CheckedChanged += new System.EventHandler(this.rbtnSemicolon_CheckedChanged);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // ImportTextPage2Control
             // 
@@ -199,6 +204,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,6 +222,7 @@
         private System.Windows.Forms.BindingSource bindingSource;
         private System.Windows.Forms.RadioButton rbtnSpace;
         private System.Windows.Forms.BindingSource bsMetadata;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDokuField;
         private System.Windows.Forms.DataGridViewComboBoxColumn colFieldName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colMandatory;

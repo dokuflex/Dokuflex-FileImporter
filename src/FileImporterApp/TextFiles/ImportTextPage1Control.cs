@@ -13,27 +13,26 @@ using FileImporterApp.Metadata;
 
 namespace FileImporterApp.TextFiles
 {
-    public partial class ImportTextPage1Control : UserControl
+    public partial class ImportTextPage1Control : UserControl, IControlDataValidation
     {
+        private readonly ImportTextViewModel viewModel;
+
         public ImportTextPage1Control()
         {
             InitializeComponent();
-            Model = new ImportTextModel();
         }
 
-        public void SetDocumentaryList(List<Documentary> documentaries)
+        public ImportTextPage1Control(ImportTextViewModel viewModel)
+            : this()
         {
-            cbxDocumentryTypes.DataSource = new BindingList<Documentary>(documentaries);
+            this.viewModel = viewModel;
+            BindComponents();
         }
 
-        public ImportTextModel Model
+        private void BindComponents()
         {
-            get { return bindingSource.Current as ImportTextModel; }
-            set
-            {
-                bindingSource.DataSource = value;
-                bindingSource.ResetBindings(true);
-            }
+            cbxDocumentryTypes.DataSource = viewModel.DocumentaryList;
+            bindingSource.DataSource = viewModel.Model;
         }
 
         private void BtnBrowsePC_Click(object sender, EventArgs e)
@@ -45,7 +44,7 @@ namespace FileImporterApp.TextFiles
             {
                 if (openFileDlg.ShowDialog() == DialogResult.OK)
                 {
-                    Model.FilePath = openFileDlg.FileName;
+                    viewModel.Model.FilePath = openFileDlg.FileName;
                     bindingSource.ResetCurrentItem();
                 }
             }
@@ -62,33 +61,23 @@ namespace FileImporterApp.TextFiles
             {
                 if (form.ShowFolderBrowserDialog())
                 {
-                    Model.CommunityId = form.Group.id;
-                    Model.FolderId = form.Folder.id;
-                    Model.FolderPath = form.FullPath;
+                    viewModel.Model.CommunityId = form.Group.id;
+                    viewModel.Model.FolderId = form.Folder.id;
+                    viewModel.Model.FolderPath = form.FullPath;
                     bindingSource.ResetCurrentItem();
                 }
             }
-        }
-
-        private void bindingSource_CurrentItemChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cbxDocumentryTypes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void cbxDocumentryTypes_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cbxDocumentryTypes.SelectedItem is Documentary documentary)
             {
-                Model.MetadataCollection.Clear();
+                viewModel.MetadataList.Clear();
 
                 foreach (var dokufield in documentary.elements)
                 {
-                    Model.MetadataCollection.Add(new MetadataItem
+                    viewModel.MetadataList.Add(new MetadataItem
                     {
                         DokufieldId = dokufield.id,
                         DokufieldType = dokufield.type,
@@ -97,13 +86,48 @@ namespace FileImporterApp.TextFiles
                     });
                 }
 
-                Model.AddFileNameMetadata();
+                viewModel.AddFileNameMetadata();
             }
         }
 
-        private void btnLoadMetadata_Click(object sender, EventArgs e)
+        public bool HasErrors()
         {
+            var result = false;
 
+            if (IsFilePathValid())
+                errorProvider.SetError(tbxSourceFile, string.Empty);
+            else
+            {
+                result = true;
+                errorProvider.SetError(tbxSourceFile, "La ruta del archivo es requerida");
+            }
+
+            if (IsDocumentaryValid())
+                errorProvider.SetError(cbxDocumentryTypes, string.Empty);
+            else
+            {
+                result = true;
+                errorProvider.SetError(cbxDocumentryTypes, "El tipo documental no es valido");
+            }
+
+            if (IsFolderValid())
+                errorProvider.SetError(tbxFolderPath, string.Empty);
+            else
+            {
+                result = true;
+                errorProvider.SetError(tbxFolderPath, "La carpeta de destino no es valida");
+            }
+
+            return result;
         }
+
+        private bool IsFilePathValid()
+            => viewModel.FilePathExists();
+
+        private bool IsDocumentaryValid()
+            => !string.IsNullOrWhiteSpace(viewModel.Model.DocumentaryId);
+
+        public bool IsFolderValid()
+            => !string.IsNullOrWhiteSpace(viewModel.Model.FolderId);
     }
 }

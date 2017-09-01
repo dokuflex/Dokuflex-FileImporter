@@ -15,20 +15,8 @@ namespace FileImporterApp.TextFiles
         public string FolderPath { get; set; }
         public string FolderId { get; set; }
         public string DocumentaryId { get; set; }
+        public bool Halted { get; set; }
+        public int UploadIndex { get; set; }
         public MetadataItemCollection MetadataCollection { get; private set; } = new MetadataItemCollection();
-
-        public void AddFileNameMetadata()
-        {
-            if (MetadataCollection.Any(e => e.DokufieldName.Equals("_FILENAME")))
-                return;
-
-            MetadataCollection.Add(new MetadataItem
-            {
-                DokufieldId = Guid.NewGuid().ToString(),
-                DokufieldType = "E",
-                DokufieldName = "_FILENAME",
-                Mandatory = true
-            });
-        }
     }
 }

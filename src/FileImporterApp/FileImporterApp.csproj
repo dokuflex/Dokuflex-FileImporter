@@ -31,11 +31,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>FileImporterApp.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DokuFlex.Windows.Common">
+    <Reference Include="DokuFlex.Windows.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Dokuflex\DokuFlex.Windows.Common.dll</HintPath>
     </Reference>
-    <Reference Include="DokuFlex.WinForms.Common">
+    <Reference Include="DokuFlex.WinForms.Common, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Dokuflex\DokuFlex.WinForms.Common.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -61,6 +66,7 @@
     <Compile Include="FieldNameIndexCollection.cs" />
     <Compile Include="FolderConfig\ImportFolderConfig.cs" />
     <Compile Include="FolderConfig\ImportFolderConfigManager.cs" />
+    <Compile Include="IControlDataValidation.cs" />
     <Compile Include="Metadata\MetadataItem.cs" />
     <Compile Include="Metadata\MetadataItemCollection.cs" />
     <Compile Include="MyApplicationContext.cs" />
@@ -130,6 +136,8 @@
       <DependentUpon>ImportTextProgressForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="FileImporterApp.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

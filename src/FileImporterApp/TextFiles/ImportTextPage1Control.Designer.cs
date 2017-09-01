@@ -41,8 +41,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // cbxDocumentryTypes
@@ -52,15 +54,10 @@
             this.cbxDocumentryTypes.FormattingEnabled = true;
             this.cbxDocumentryTypes.Location = new System.Drawing.Point(159, 216);
             this.cbxDocumentryTypes.Name = "cbxDocumentryTypes";
-            this.cbxDocumentryTypes.Size = new System.Drawing.Size(227, 23);
+            this.cbxDocumentryTypes.Size = new System.Drawing.Size(191, 23);
             this.cbxDocumentryTypes.TabIndex = 24;
             this.cbxDocumentryTypes.ValueMember = "id";
-            this.cbxDocumentryTypes.SelectedIndexChanged += new System.EventHandler(this.cbxDocumentryTypes_SelectedIndexChanged);
             this.cbxDocumentryTypes.SelectedValueChanged += new System.EventHandler(this.cbxDocumentryTypes_SelectedValueChanged);
-            // 
-            // bindingSource
-            // 
-            this.bindingSource.CurrentItemChanged += new System.EventHandler(this.bindingSource_CurrentItemChanged);
             // 
             // label5
             // 
@@ -95,7 +92,7 @@
             this.tbxFolderPath.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "FolderPath", true));
             this.tbxFolderPath.Location = new System.Drawing.Point(159, 261);
             this.tbxFolderPath.Name = "tbxFolderPath";
-            this.tbxFolderPath.Size = new System.Drawing.Size(289, 23);
+            this.tbxFolderPath.Size = new System.Drawing.Size(278, 23);
             this.tbxFolderPath.TabIndex = 20;
             // 
             // label2
@@ -122,7 +119,7 @@
             this.tbxSourceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "FilePath", true));
             this.tbxSourceFile.Location = new System.Drawing.Point(55, 97);
             this.tbxSourceFile.Name = "tbxSourceFile";
-            this.tbxSourceFile.Size = new System.Drawing.Size(442, 23);
+            this.tbxSourceFile.Size = new System.Drawing.Size(424, 23);
             this.tbxSourceFile.TabIndex = 15;
             // 
             // label1
@@ -155,6 +152,10 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "Seleccione el origen y destino de los datos";
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // ImportTextPage1Control
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -175,6 +176,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,5 +196,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.BindingSource bindingSource;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

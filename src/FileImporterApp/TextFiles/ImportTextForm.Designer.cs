@@ -28,22 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            FileImporterApp.TextFiles.ImportTextModel importTextModel2 = new FileImporterApp.TextFiles.ImportTextModel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportTextForm));
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnPrior = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnFinalize = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.wizardPane = new System.Windows.Forms.Panel();
-            this.importTextPage3Control1 = new FileImporterApp.TextFiles.ImportTextPage3Control();
-            this.importTextPage2Control1 = new FileImporterApp.TextFiles.ImportTextPage2Control();
-            this.importTextPage1Control1 = new FileImporterApp.TextFiles.ImportTextPage1Control();
             this.panel2.SuspendLayout();
-            this.wizardPane.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // panel2
-            //
+            // 
             this.panel2.Controls.Add(this.btnPrior);
             this.panel2.Controls.Add(this.btnNext);
             this.panel2.Controls.Add(this.btnFinalize);
@@ -53,9 +49,9 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(614, 43);
             this.panel2.TabIndex = 14;
-            //
+            // 
             // btnPrior
-            //
+            // 
             this.btnPrior.Location = new System.Drawing.Point(258, 8);
             this.btnPrior.Name = "btnPrior";
             this.btnPrior.Size = new System.Drawing.Size(75, 23);
@@ -63,9 +59,9 @@
             this.btnPrior.Text = "< Anterior";
             this.btnPrior.UseVisualStyleBackColor = true;
             this.btnPrior.Click += new System.EventHandler(this.BtnPrior_Click);
-            //
+            // 
             // btnNext
-            //
+            // 
             this.btnNext.Location = new System.Drawing.Point(339, 8);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(75, 23);
@@ -73,74 +69,37 @@
             this.btnNext.Text = "Siguiente >";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
-            //
+            // 
             // btnFinalize
-            //
+            // 
             this.btnFinalize.Location = new System.Drawing.Point(420, 8);
             this.btnFinalize.Name = "btnFinalize";
             this.btnFinalize.Size = new System.Drawing.Size(75, 23);
             this.btnFinalize.TabIndex = 1;
             this.btnFinalize.Text = "Finalizar";
             this.btnFinalize.UseVisualStyleBackColor = true;
-            this.btnFinalize.Click += new System.EventHandler(this.btnFinalize_Click);
-            //
+            this.btnFinalize.Click += new System.EventHandler(this.BtnFinalize_Click);
+            // 
             // btnCancel
-            //
+            // 
             this.btnCancel.Location = new System.Drawing.Point(501, 8);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 0;
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            //
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            // 
             // wizardPane
-            //
-            this.wizardPane.Controls.Add(this.importTextPage3Control1);
-            this.wizardPane.Controls.Add(this.importTextPage2Control1);
-            this.wizardPane.Controls.Add(this.importTextPage1Control1);
+            // 
             this.wizardPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wizardPane.Location = new System.Drawing.Point(0, 0);
             this.wizardPane.Name = "wizardPane";
             this.wizardPane.Size = new System.Drawing.Size(614, 378);
             this.wizardPane.TabIndex = 15;
-            //
-            // importTextPage3Control1
-            //
-            this.importTextPage3Control1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importTextPage3Control1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importTextPage3Control1.Location = new System.Drawing.Point(0, 0);
-            this.importTextPage3Control1.Name = "importTextPage3Control1";
-            this.importTextPage3Control1.Size = new System.Drawing.Size(614, 378);
-            this.importTextPage3Control1.TabIndex = 2;
-            //
-            // importTextPage2Control1
-            //
-            this.importTextPage2Control1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importTextPage2Control1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importTextPage2Control1.Location = new System.Drawing.Point(0, 0);
-            this.importTextPage2Control1.Model = null;
-            this.importTextPage2Control1.Name = "importTextPage2Control1";
-            this.importTextPage2Control1.Size = new System.Drawing.Size(614, 378);
-            this.importTextPage2Control1.TabIndex = 1;
-            //
-            // importTextPage1Control1
-            //
-            this.importTextPage1Control1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importTextPage1Control1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importTextPage1Control1.Location = new System.Drawing.Point(0, 0);
-            importTextModel2.CommunityId = null;
-            importTextModel2.DocumentaryId = null;
-            importTextModel2.FilePath = null;
-            importTextModel2.FolderId = null;
-            importTextModel2.FolderPath = null;
-            this.importTextPage1Control1.Model = importTextModel2;
-            this.importTextPage1Control1.Name = "importTextPage1Control1";
-            this.importTextPage1Control1.Size = new System.Drawing.Size(614, 378);
-            this.importTextPage1Control1.TabIndex = 0;
-            //
+            // 
             // ImportTextForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 421);
@@ -148,13 +107,13 @@
             this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ImportTextForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Importar archivo de texto";
             this.panel2.ResumeLayout(false);
-            this.wizardPane.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -166,8 +125,5 @@
         private System.Windows.Forms.Button btnFinalize;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Panel wizardPane;
-        private ImportTextPage1Control importTextPage1Control1;
-        private ImportTextPage2Control importTextPage2Control1;
-        private ImportTextPage3Control importTextPage3Control1;
     }
 }

@@ -9,13 +9,14 @@ using System.Collections.Generic;
 using DokuFlex.Windows.Common.Services.Data;
 using System.Text;
 using System.Linq;
-using DokuFlex.WinForms.Common;
 using log4net;
+using DokuFlex.WinForms.Common;
 
 namespace FileImporterApp.TextFiles
 {
     public class ImportTextManager
     {
+        private string token;
         private ImportTextViewModel viewModel;
         private ImportTextProgressForm progressForm;
         private const string FILE_NAME = ".\\importTextStore.json";
@@ -26,126 +27,67 @@ namespace FileImporterApp.TextFiles
         {
             log = LogManager.GetLogger(GetType());
             dataService = DataServiceFactory.Create();
+            viewModel = new ImportTextViewModel(dataService)
+            {
+                Model = new ImportTextModel()
+            };
         }
 
         public bool Importing { get; private set; }
 
-        private string[] GetFieldValues(string textLine)
-        {
-            return textLine.Split(viewModel.Model.FieldDelimiter);
-        }
-
-        public Dictionary<string, List<DokuField>> GetUploadList()
-        {
-            var list = new Dictionary<string, List<DokuField>>();
-            var isFirstRow = true;
-            var spColIndex = GetFileNameColumnIndex();
-
-            using (var reader = new StreamReader(File.OpenRead(viewModel.Model.FilePath), Encoding.GetEncoding("iso-8859-1"), false))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-
-                    if (isFirstRow)
-                    {
-                        isFirstRow = false;
-                        continue;
-                    }
-
-                    var dokuFields = new List<DokuField>();
-                    var fieldValues = GetFieldValues(line);
-
-                    for (int i = 0; i < fieldValues.Length; i++)
-                    {
-                        var dokuField = CreateDokuFieldFromFieldIndex(i);
-
-                        if (dokuField != null)
-                        {
-                            dokuField.value = fieldValues[i];
-                            dokuFields.Add(dokuField);
-                        }
-                    }
-
-                    list.Add(fieldValues[spColIndex], dokuFields);
-                }
-            }
-
-            return list;
-        }
-
-        private int GetFileNameColumnIndex()
-        {
-            var metadata = viewModel.Model.MetadataCollection.FirstOrDefault(f => f.DokufieldName.Equals("_FILENAME"));
-            return metadata != null ? metadata.FieldNameIndex : 0;
-        }
-
-        private DokuField CreateDokuFieldFromFieldIndex(int fieldIndex)
-        {
-            var medatada = viewModel.Model.MetadataCollection.FirstOrDefault(f => f.FieldNameIndex.Equals(fieldIndex));
-
-            if (medatada == null || medatada.DokufieldType.Equals("E"))
-                return null;
-
-            var newDkField = new DokuField
-            {
-                id = medatada.DokufieldId,
-                key = medatada.DokufieldName,
-                type = medatada.DokufieldType,
-            };
-
-            return newDkField;
-        }
-
-        public void StopImport()
-        {
-
-        }
-
-        private ImportTextViewModel LoadFromStore()
+        private ImportTextModel LoadModelFromStore()
         {
             var str = File.Exists(FILE_NAME) ? File.ReadAllText(FILE_NAME) : string.Empty;
 
             if (string.IsNullOrWhiteSpace(str))
-                return new ImportTextViewModel();
+                return new ImportTextModel();
 
             JObject jObject = JObject.Parse(str);
             var jsonSerializer = new JsonSerializer();
-            var configObject = (ImportTextViewModel)jsonSerializer.Deserialize(new JTokenReader(jObject), typeof(ImportTextViewModel));
+            var configObject = (ImportTextModel)jsonSerializer.Deserialize(new JTokenReader(jObject), typeof(ImportTextModel));
             return configObject;
         }
 
-        private void SaveToStore(ImportTextViewModel viewModel)
+        private void SaveModelToStore(ImportTextModel model)
         {
-            var jObject = JObject.FromObject(viewModel);
-            File.WriteAllText(FILE_NAME, jObject.ToString());
+            var jObject = JObject.FromObject(model);
+
+            try
+            {
+                File.WriteAllText(FILE_NAME, jObject.ToString());
+            }
+            catch (Exception ex)
+            {
+                log.Error("Can't save model to the import text store", ex);
+            }
         }
 
-        private void ResumeImport()
+        private void ClearModelFromStore()
         {
-
+            SaveModelToStore(new ImportTextModel());
         }
 
         private async Task BeginImport()
         {
-            var token = await Session.GetTikectAsync();
-
-            if (string.IsNullOrWhiteSpace(token))
-                return;
-
             var counter = 0;
             var filename = string.Empty;
 
             try
             {
-                var uploadList = GetUploadList();
+                var uploadList = viewModel.GetUploadList();
 
                 CreateProgressWindow();
 
                 foreach (var item in uploadList)
                 {
-                    if (counter < viewModel.LastUploadedIndex)
+                    if (!Importing)
+                        break;
+
+                    if (counter < viewModel.Model.UploadIndex)
+                    {
+                        counter++;
                         continue;
+                    }
 
                     filename = item.Key;
                     UpdateProgress(counter + 1, uploadList.Count);
@@ -161,16 +103,14 @@ namespace FileImporterApp.TextFiles
                     }
 
                     counter++;
+                    viewModel.Model.UploadIndex++;
                 }
             }
             catch (Exception ex)
             {
                 log.Error($"Can't import file: {filename}", ex);
                 MessageBox.Show("Ha ocurrido un error mientras se importaban los datos", "File Importer", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                CloseProgressWindow();
+                StopImport();
             }
         }
 
@@ -179,6 +119,7 @@ namespace FileImporterApp.TextFiles
             if (progressForm != null)
             {
                 progressForm.Close();
+                progressForm.FormClosing -= ProgressForm_FormClosing;
                 progressForm.Dispose();
                 progressForm = null;
             }
@@ -187,7 +128,24 @@ namespace FileImporterApp.TextFiles
         private void CreateProgressWindow()
         {
             if (progressForm == null)
+            {
                 progressForm = new ImportTextProgressForm();
+                progressForm.FormClosing += ProgressForm_FormClosing;
+            }
+
+        }
+
+        private void ProgressForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Importing)
+            {
+                if (MessageBox.Show("¿Desea cancelar la importación de archivos?", "FileImporter", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    Importing = false;
+                }
+                else
+                    e.Cancel = true;
+            }
         }
 
         private void UpdateProgress(int index, int count)
@@ -196,22 +154,69 @@ namespace FileImporterApp.TextFiles
             progressForm.UpdateProgress(index, count);
         }
 
+        private async Task<bool> CreateToken()
+        {
+            token = await Session.GetTikectAsync();
+            return !string.IsNullOrWhiteSpace(token);
+        }
+
         public async Task StartImport()
         {
-            viewModel = LoadFromStore();
+            Importing = true;
+            log.Info("Import text started!");
 
-            if (viewModel.Halted)
+            try
             {
-                if (MessageBox.Show(Resources.ResumeImportText, "FileImporter", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                var model = LoadModelFromStore();
+
+                if (model.Halted)
                 {
-                    ResumeImport();
+                    model.Halted = false;
+
+                    ClearModelFromStore();
+
+                    if (MessageBox.Show(Resources.ResumeImportText, "FileImporter", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        viewModel.Model = model;
+
+                        if (await CreateToken())
+                            await BeginImport();
+
+                    }
+                    else
+                    {
+                        await RunImportWizard();
+                    }
                 }
                 else
-                    await BeginImport();
+                    await RunImportWizard();
             }
-            else
+            finally
             {
-                viewModel = new ImportTextViewModel();
+                Importing = false;
+                CloseProgressWindow();
+                log.Info("Import text finalized!");
+            }
+        }
+
+        public void StopImport()
+        {
+            if (Importing)
+            {
+                Importing = false;
+                viewModel.Model.Halted = true;
+                CloseProgressWindow();
+
+                if (viewModel.Model != null)
+                    SaveModelToStore(viewModel.Model);
+            }
+        }
+
+        private async Task RunImportWizard()
+        {
+            if (await CreateToken())
+            {
+                await viewModel.LoadListData(token);
 
                 using (var importForm = new ImportTextForm(viewModel))
                 {
