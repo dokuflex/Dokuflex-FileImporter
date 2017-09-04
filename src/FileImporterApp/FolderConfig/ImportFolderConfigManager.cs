@@ -1,12 +1,20 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Windows.Forms;
 
 namespace FileImporterApp.FolderConfig
 {
     public class ImportFolderConfigManager
     {
         private const string FILE_NAME = ".\\FolderConfig.json";
+
+        public ImportFolderConfigManager()
+        {
+            FolderConfig = OpenConfiguration();
+        }
+
+        public ImportFolderConfig FolderConfig { get; private set; }
 
         public ImportFolderConfig OpenConfiguration()
         {
@@ -25,6 +33,19 @@ namespace FileImporterApp.FolderConfig
         {
             var jObject = JObject.FromObject(config);
             File.WriteAllText(FILE_NAME, jObject.ToString());
+        }
+
+        public bool ShowConfigForm()
+        {
+            using (var form = new ImportFolderConfigForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

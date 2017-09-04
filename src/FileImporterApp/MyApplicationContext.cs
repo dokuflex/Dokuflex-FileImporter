@@ -1,28 +1,43 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using log4net;
 using FileImporterApp.FolderConfig;
 using FileImporterApp.TextFiles;
 using DokuFlex.WinForms.Common;
+using System.Collections.Generic;
+using DokuFlex.Windows.Common.Services.Data;
+using FileImporterApp.Uploads;
+using System.Diagnostics;
 
 namespace FileImporterApp
 {
-    class MyApplicationContext : ApplicationContext
+    public class MyApplicationContext : ApplicationContext
     {
         private NotifyIcon notifyIcon;
         private ContextMenu contextMenu;
-        private ImportFolderConfig folderConfig;
         private ImportFolderConfigManager folderConfigManager;
         private ImportTextManager ImportTextManager;
+        private UploadManager uploadManager;
+        private FileSystemWatcher watcher;
         private ILog log;
 
         public MyApplicationContext()
         {
             InitializeContext();
+            ContextLoaded();
 
             Application.ThreadExit += Application_ThreadExit;
             Application.ThreadException += Application_ThreadException;
+        }
+
+        private void ContextLoaded()
+        {
+            if (Directory.Exists(folderConfigManager.FolderConfig.DirectoryPath))
+            {
+                StartWatch(folderConfigManager.FolderConfig.DirectoryPath);
+            }
         }
 
         private void Application_ThreadExit(object sender, EventArgs e)
@@ -44,8 +59,8 @@ namespace FileImporterApp
             log = LogManager.GetLogger(GetType());
 
             folderConfigManager = new ImportFolderConfigManager();
-            folderConfig = folderConfigManager.OpenConfiguration();
             ImportTextManager = new ImportTextManager();
+            uploadManager = new UploadManager();
 
             contextMenu = new ContextMenu();
 
@@ -84,6 +99,38 @@ namespace FileImporterApp
                 Icon = Icon.ExtractAssociatedIcon("FileImporterApp.ico"),
                 Visible = true
             };
+
+            watcher = new FileSystemWatcher { Filter = "*.*" };
+            watcher.Changed += Watcher_Changed;
+        }
+
+        private async void Watcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType == WatcherChangeTypes.Created)
+            {
+                var fileInfo = new FileInfo(e.FullPath);
+
+                if (!folderConfigManager.FolderConfig.IsExtensionValid(fileInfo.Extension))
+                    return;
+
+                var dokuFields = folderConfigManager.FolderConfig.GetDokuFieldList(e.FullPath);
+                var item = new Tuple<string, List<DokuField>>(e.FullPath, dokuFields);
+                uploadManager.AddToUpload(item);
+
+                if (!uploadManager.Uploading)
+                    await uploadManager.UploadFiles();
+            }
+        }
+
+        private void StartWatch(string path)
+        {
+            watcher.Path = path;
+            watcher.EnableRaisingEvents = true;
+        }
+
+        private void StopWatch()
+        {
+            watcher.EnableRaisingEvents = false;
         }
 
         private void SettingsMenuItem_Click(object sender, EventArgs e)
@@ -101,7 +148,11 @@ namespace FileImporterApp
 
         private void ConfigureImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (folderConfigManager.ShowConfigForm())
+            {
+                StopWatch();
+                StartWatch(folderConfigManager.FolderConfig.DirectoryPath);
+            }
         }
 
         private async void ImportFilesMenuItem_Click(object sender, EventArgs e)
@@ -117,7 +168,7 @@ namespace FileImporterApp
 
         private void OpenImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-
+            Process.Start(folderConfigManager.FolderConfig.DirectoryPath);
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)

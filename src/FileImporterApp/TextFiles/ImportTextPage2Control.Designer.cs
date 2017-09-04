@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colDokuField = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFieldName = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colMandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.bsMetadata = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
@@ -44,6 +41,9 @@
             this.rbtnSemicolon = new System.Windows.Forms.RadioButton();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.colDokuField = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFieldName = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colMandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsMetadata)).BeginInit();
             this.panel1.SuspendLayout();
@@ -76,30 +76,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(520, 174);
             this.dataGridView1.TabIndex = 18;
-            // 
-            // colDokuField
-            // 
-            this.colDokuField.DataPropertyName = "DokufieldName";
-            this.colDokuField.HeaderText = "Propiedad";
-            this.colDokuField.Name = "colDokuField";
-            this.colDokuField.ReadOnly = true;
-            this.colDokuField.Width = 200;
-            // 
-            // colFieldName
-            // 
-            this.colFieldName.DataPropertyName = "FieldNameIndex";
-            this.colFieldName.HeaderText = "Campo";
-            this.colFieldName.Name = "colFieldName";
-            this.colFieldName.Width = 200;
-            // 
-            // colMandatory
-            // 
-            this.colMandatory.DataPropertyName = "Mandatory";
-            this.colMandatory.HeaderText = "Requerido";
-            this.colMandatory.Name = "colMandatory";
-            this.colMandatory.ReadOnly = true;
-            this.colMandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colMandatory.Width = 70;
             // 
             // panel1
             // 
@@ -185,6 +161,30 @@
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // colDokuField
+            // 
+            this.colDokuField.DataPropertyName = "DokufieldName";
+            this.colDokuField.HeaderText = "Propiedad";
+            this.colDokuField.Name = "colDokuField";
+            this.colDokuField.ReadOnly = true;
+            this.colDokuField.Width = 200;
+            // 
+            // colFieldName
+            // 
+            this.colFieldName.DataPropertyName = "FieldNameIndex";
+            this.colFieldName.HeaderText = "Campo";
+            this.colFieldName.Name = "colFieldName";
+            this.colFieldName.Width = 200;
+            // 
+            // colMandatory
+            // 
+            this.colMandatory.DataPropertyName = "Mandatory";
+            this.colMandatory.HeaderText = "Requerido";
+            this.colMandatory.Name = "colMandatory";
+            this.colMandatory.ReadOnly = true;
+            this.colMandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colMandatory.Width = 70;
             // 
             // ImportTextPage2Control
             // 

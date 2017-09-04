@@ -1,4 +1,5 @@
-﻿using FileImporterApp.Metadata;
+﻿using System.Linq;
+using FileImporterApp.Metadata;
 
 namespace FileImporterApp.FolderConfig
 {
@@ -14,5 +15,11 @@ namespace FileImporterApp.FolderConfig
         public string DocumentaryId { get; set; }
         public MetadataItemCollection MetadataCollection { get; private set; } = new MetadataItemCollection();
         public bool DeleteImportedFiles { get; set; }
+
+        public bool IsExtensionValid(string extension)
+        {
+            var extensions = FileExtensions.ToLowerInvariant().Split(',');
+            return extensions.Contains(extension.ToLowerInvariant());
+        }
     }
 }

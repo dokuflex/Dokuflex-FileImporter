@@ -65,7 +65,15 @@
     <Compile Include="FieldNameIndex.cs" />
     <Compile Include="FieldNameIndexCollection.cs" />
     <Compile Include="FolderConfig\ImportFolderConfig.cs" />
+    <Compile Include="FolderConfig\ImportFolderConfigExtensions.cs" />
+    <Compile Include="FolderConfig\ImportFolderConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderConfig\ImportFolderConfigForm.Designer.cs">
+      <DependentUpon>ImportFolderConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FolderConfig\ImportFolderConfigManager.cs" />
+    <Compile Include="FolderConfig\ImportFolderConfigViewModel.cs" />
     <Compile Include="IControlDataValidation.cs" />
     <Compile Include="Metadata\MetadataItem.cs" />
     <Compile Include="Metadata\MetadataItemCollection.cs" />
@@ -110,12 +118,16 @@
       <DependentUpon>ImportTextProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TextFiles\ImportTextViewModel.cs" />
+    <Compile Include="Uploads\UploadManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FolderConfig\ImportFolderConfigForm.resx">
+      <DependentUpon>ImportFolderConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
