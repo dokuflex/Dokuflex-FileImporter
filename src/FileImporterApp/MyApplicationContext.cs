@@ -17,7 +17,7 @@ namespace FileImporterApp
     {
         private NotifyIcon notifyIcon;
         private ContextMenu contextMenu;
-        private ImportFolderConfigManager folderConfigManager;
+        private ImportFolderManager folderManager;
         private ImportTextManager ImportTextManager;
         private UploadManager uploadManager;
         private FileSystemWatcher watcher;
@@ -34,9 +34,9 @@ namespace FileImporterApp
 
         private void ContextLoaded()
         {
-            if (Directory.Exists(folderConfigManager.FolderConfig.DirectoryPath))
+            if (Directory.Exists(folderManager.FolderConfig.DirectoryPath))
             {
-                StartWatch(folderConfigManager.FolderConfig.DirectoryPath);
+                StartWatch(folderManager.FolderConfig.DirectoryPath);
             }
         }
 
@@ -58,7 +58,7 @@ namespace FileImporterApp
         {
             log = LogManager.GetLogger(GetType());
 
-            folderConfigManager = new ImportFolderConfigManager();
+            folderManager = new ImportFolderManager();
             ImportTextManager = new ImportTextManager();
             uploadManager = new UploadManager();
 
@@ -101,24 +101,31 @@ namespace FileImporterApp
             };
 
             watcher = new FileSystemWatcher { Filter = "*.*" };
-            watcher.Changed += Watcher_Changed;
+            watcher.Created += Watcher_Created;
         }
 
-        private async void Watcher_Changed(object sender, FileSystemEventArgs e)
+        private async void Watcher_Created(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
                 var fileInfo = new FileInfo(e.FullPath);
 
-                if (!folderConfigManager.FolderConfig.IsExtensionValid(fileInfo.Extension))
+                if (!folderManager.FolderConfig.IsExtensionValid(fileInfo.Extension))
                     return;
 
-                var dokuFields = folderConfigManager.FolderConfig.GetDokuFieldList(e.FullPath);
+                var name = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
+                var dokuFields = folderManager.FolderConfig.GetDokuFieldList(name);
                 var item = new Tuple<string, List<DokuField>>(e.FullPath, dokuFields);
+                uploadManager.CommunityID = folderManager.FolderConfig.CommunityId;
+                uploadManager.FolderId = folderManager.FolderConfig.FolderId;
+                uploadManager.DocumentaryID = folderManager.FolderConfig.DocumentaryId;
                 uploadManager.AddToUpload(item);
 
                 if (!uploadManager.Uploading)
+                {
+                    ShowUploadStartedInfo();
                     await uploadManager.UploadFiles();
+                }
             }
         }
 
@@ -146,12 +153,12 @@ namespace FileImporterApp
             Session.ChangeCredentials();
         }
 
-        private void ConfigureImportFolderMenuItem_Click(object sender, EventArgs e)
+        private async void ConfigureImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-            if (folderConfigManager.ShowConfigForm())
+            if (await folderManager.ShowConfigForm())
             {
                 StopWatch();
-                StartWatch(folderConfigManager.FolderConfig.DirectoryPath);
+                StartWatch(folderManager.FolderConfig.DirectoryPath);
             }
         }
 
@@ -168,12 +175,17 @@ namespace FileImporterApp
 
         private void OpenImportFolderMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(folderConfigManager.FolderConfig.DirectoryPath);
+            Process.Start(folderManager.FolderConfig.DirectoryPath);
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void ShowUploadStartedInfo()
+        {
+            notifyIcon.ShowBalloonTip(20000, "FileImporter", "Carga de archivos iniciada", ToolTipIcon.Info);
         }
     }
 }

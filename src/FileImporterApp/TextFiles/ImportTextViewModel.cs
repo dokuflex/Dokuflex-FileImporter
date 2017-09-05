@@ -130,5 +130,10 @@ namespace FileImporterApp.TextFiles
         {
             return textLine.Split(Model.FieldDelimiter);
         }
+
+        public void ClearListData()
+        {
+            DocumentaryList = null;
+        }
     }
 }

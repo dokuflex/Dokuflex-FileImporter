@@ -27,6 +27,7 @@ namespace FileImporterApp.Uploads
         public bool Uploading { get; private set; }
 
         public string CommunityID { get; set; }
+        public string FolderId { get; set; }
         public string DocumentaryID { get; set; }
 
         public void AddToUpload(Tuple<string, List<DokuField>> item)
@@ -75,7 +76,7 @@ namespace FileImporterApp.Uploads
         {
             try
             {
-                var result = await dataService.UploadAsync(token, CommunityID, string.Empty, DocumentaryID, string.Empty,
+                var result = await dataService.UploadAsync(token, CommunityID, string.Empty, FolderId, string.Empty,
                         string.Empty, true, string.Empty, string.Empty, false, new FileInfo(item.Item1));
 
                 if (result != null)

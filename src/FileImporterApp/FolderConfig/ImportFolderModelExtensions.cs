@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace FileImporterApp.FolderConfig
 {
-    public static class ImportFolderConfigExtensions
+    public static class ImportFolderModelExtensions
     {
-        public static List<DokuField> GetDokuFieldList(this ImportFolderConfig folderConfig, string fileName)
+        public static List<DokuField> GetDokuFieldList(this ImportFolderModel folderConfig, string fileName)
         {
             var list = new List<DokuField>();
             var fieldValues = fileName.Split(folderConfig.FieldDelimiter);

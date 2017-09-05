@@ -92,7 +92,7 @@ namespace FileImporterApp.TextFiles
                     filename = item.Key;
                     UpdateProgress(counter + 1, uploadList.Count);
 
-                    var result = await dataService.UploadAsync(token, viewModel.Model.CommunityId, string.Empty, viewModel.Model.DocumentaryId, string.Empty,
+                    var result = await dataService.UploadAsync(token, viewModel.Model.CommunityId, string.Empty, viewModel.Model.FolderId, string.Empty,
                         string.Empty, true, string.Empty, string.Empty, false, new FileInfo(item.Key));
 
                     if (result != null)
@@ -214,6 +214,8 @@ namespace FileImporterApp.TextFiles
 
         private async Task RunImportWizard()
         {
+            viewModel.ClearListData();
+
             if (await CreateToken())
             {
                 await viewModel.LoadListData(token);

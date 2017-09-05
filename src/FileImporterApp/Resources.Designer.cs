@@ -61,6 +61,15 @@ namespace FileImporterApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FileImporter.
+        /// </summary>
+        internal static string ApplicationTitle {
+            get {
+                return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cambiar credenciales de usuario.
         /// </summary>
         internal static string ChangeCredentialsText {
