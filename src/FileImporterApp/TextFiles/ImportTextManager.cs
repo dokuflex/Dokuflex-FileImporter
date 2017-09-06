@@ -78,6 +78,8 @@ namespace FileImporterApp.TextFiles
 
                 CreateProgressWindow();
 
+                viewModel.Model.Halted = true;
+
                 foreach (var item in uploadList)
                 {
                     if (!Importing)
@@ -88,6 +90,8 @@ namespace FileImporterApp.TextFiles
                         counter++;
                         continue;
                     }
+
+                    SaveModelToStore(viewModel.Model);
 
                     filename = item.Key;
                     UpdateProgress(counter + 1, uploadList.Count);
@@ -105,6 +109,9 @@ namespace FileImporterApp.TextFiles
                     counter++;
                     viewModel.Model.UploadIndex++;
                 }
+
+                viewModel.Model.Halted = false;
+                SaveModelToStore(new ImportTextModel());
             }
             catch (Exception ex)
             {
@@ -204,7 +211,6 @@ namespace FileImporterApp.TextFiles
             if (Importing)
             {
                 Importing = false;
-                viewModel.Model.Halted = true;
                 CloseProgressWindow();
 
                 if (viewModel.Model != null)

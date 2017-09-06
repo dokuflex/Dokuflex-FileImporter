@@ -7,6 +7,6 @@
         public string DokufieldType { get; set; }
         public bool Mandatory { get; set; }
         public string FieldName { get; set; }
-        public int FieldNameIndex { get; set; }
+        public int FieldNameIndex { get; set; } = -1;
     }
 }

@@ -58,6 +58,7 @@ namespace FileImporterApp.TextFiles
         private FieldNameIndexCollection GetFieldNameIndexCollection()
         {
             var collection = new FieldNameIndexCollection();
+            collection.Add(new FieldNameIndex { Index = -1, Name = "(Vacio)" });
 
             if (!viewModel.FilePathExists())
                 return collection;
@@ -76,7 +77,7 @@ namespace FileImporterApp.TextFiles
         {
             return new FieldNameIndexCollection
             {
-                new FieldNameIndex{ Name = "", Index = 0}
+                new FieldNameIndex{ Name = "(Vacio)", Index = -1 }
             };
         }
 
@@ -109,7 +110,7 @@ namespace FileImporterApp.TextFiles
             foreach (var metadata in viewModel.MetadataList)
             {
                 metadata.FieldName = string.Empty;
-                metadata.FieldNameIndex = 0;
+                metadata.FieldNameIndex = -1;
             }
         }
 
@@ -166,7 +167,7 @@ namespace FileImporterApp.TextFiles
         {
             foreach (var metadata in viewModel.MetadataList)
             {
-                if (metadata.Mandatory && metadata.FieldNameIndex == 0)
+                if (metadata.Mandatory && metadata.FieldNameIndex == -1)
                     return false;
 
             }
